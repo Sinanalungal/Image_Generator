@@ -1,0 +1,6 @@
+.form-input:focus {
+    outline: none;
+    outline-color:  rgb(106,144,122);
+    border-color: rgb(106,144,122);
+}
+  

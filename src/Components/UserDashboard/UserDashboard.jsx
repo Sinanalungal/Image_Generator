@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { GrDocumentImage } from "react-icons/gr";
+import './UserDashboard.css'
+import { Link } from 'react-router-dom';
+
+// Updated code using strokeLinecap
 
 function UserDashboard() {
     const [dropdown,setDropdown]=useState(false)
@@ -11,7 +15,7 @@ function UserDashboard() {
   return (
     <>
     <div className=' bg-slate-100'>
-    <nav className="bg-slate-100">
+    <nav className="bg-white border-b shadow-md">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -27,13 +31,13 @@ function UserDashboard() {
                 className="block h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5" 
                 stroke="currentColor"
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                 />
               </svg>
@@ -41,11 +45,11 @@ function UserDashboard() {
                 className="hidden h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
@@ -119,21 +123,21 @@ function UserDashboard() {
               </div>
               {dropdown && (
                 <div
-                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
                   tabIndex="-1"
                 >
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">
+                  <Link className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-800 hover:text-white"  role="menuitem" tabIndex="-1" id="user-menu-item-0" to='/userprofile'>
                     Your Profile
-                  </a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">
+                  </Link>
+                  {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">
                     Settings
-                  </a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">
+                  </a> */}
+                  <Link className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-800 hover:text-white" role="menuitem" tabIndex="-1" id="user-menu-item-2">
                     Sign out
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
@@ -166,15 +170,14 @@ function UserDashboard() {
     </div>
       
         <form className='lg:w-[80%] w-[99%] mx-auto py-[38px]'>   
-            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
                 {/* <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"> */}
                     {/* <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        <path stroke="currentColor" stroke-linecap="round" strokeLinejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg> */}
                 {/* </div> */}
-                <input type="search" id="default-search" className="block w-full  p-4 ps-10 text-sm  text-gray-900 border border-gray-300 rounded-lg bg-slate-50" placeholder="Enter details...." />
-                <button type="submit" className="text-white absolute end-2.5 bottom-2.5 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4  py-2 dark:focus:ring-white" style={{backgroundColor:'rgb(106,144,122)'}}>Generate</button>
+                <input type="search" id="default-search" className="form-input block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-slate-50" placeholder="Enter details...."/>                <button type="submit" className="text-white absolute end-2.5 bottom-2.5 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4  py-2 dark:focus:ring-white" style={{backgroundColor:'rgb(106,144,122)'}}>Generate</button>
             </div>
         </form>
     </div>

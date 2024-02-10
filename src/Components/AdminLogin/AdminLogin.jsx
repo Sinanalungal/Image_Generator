@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
+  const navigator=useNavigate()
   return (
     <>
       <section className="bg-gray-100 min-h-svh  ">
@@ -50,7 +52,7 @@ function AdminLogin() {
                 <button
                   type="button"
                   className=" border border-gray-300 font-bold sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  style={{ backgroundColor: "black" }}
+                  style={{ backgroundColor: "black" }} onClick={()=>navigator('/adminpage')}
                   required
                 >
                   Login
