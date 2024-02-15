@@ -8,10 +8,13 @@ import { resetLoginError } from "../../features/LoginSlice";
 import Cookies from "js-cookie";
 import { userLogined } from "../../features/LoginSlice";
 import { userLogout } from "../../features/LoginSlice";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [EmailError, setEmailError] = useState("");
+  const [PasswordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const { error } = useSelector((state) => state.login);
@@ -32,23 +35,40 @@ function Login() {
     dispatch(resetLoginError());
   }, [email, password]);
 
+  const validateEmail = (value) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailError(regex.test(value) ? "" : "Invalid email");
+  };
   function handleEmailChange(e) {
-    e.preventDefault();
-    setEmail(e.target.value);
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
   }
+
+  const validatePassword = (value) => {
+    const regex = /^.{8,}$/;
+    setPasswordError(
+      regex.test(value) ? "" : "Password must be at least 8 characters"
+    );
+  };
   function handlePasswordChange(e) {
-    e.preventDefault();
-    setPassword(e.target.value);
+    const value = e.target.value;
+    setPassword(value);
+    validatePassword(value);
   }
+
   function submitForm(e) {
     e.preventDefault();
-    const data = {
-      email: email,
-      password: password,
-    };
-    const respo = dispatch(LoginUser(data));
-
-    console.log(respo);
+    if (!EmailError && !PasswordError) {
+      const data = {
+        email: email,
+        password: password,
+      };
+      const respo = dispatch(LoginUser(data));
+      console.log(respo);
+    } else {
+      toast.error(EmailError ? EmailError : PasswordError);
+    }
   }
 
   return (
@@ -86,7 +106,9 @@ function Login() {
             >
               <input
                 name="email"
-                className={error.email ? "input-changed" : "input1"}
+                className={
+                  EmailError || error.email ? "input-changed" : "input1"
+                }
                 required=""
                 placeholder="email"
                 type="email"
@@ -94,11 +116,13 @@ function Login() {
                 onChange={(e) => handleEmailChange(e)}
               />
               <div className="error h-[10px] text-red-600">
-                {error.email ? error.email : ""}
+                {error.email ? error.email : EmailError}
               </div>
               <input
                 name="password"
-                className={error.password ? "input-changed" : "input1"}
+                className={
+                  PasswordError || error.password ? "input-changed" : "input1"
+                }
                 required=""
                 placeholder="password"
                 type="password"
@@ -106,7 +130,7 @@ function Login() {
                 onChange={(e) => handlePasswordChange(e)}
               />
               <div className="error h-[10px] text-red-600">
-                {error.password ? error.password : ""}
+                {error.password ? error.password : PasswordError}
               </div>
               <button className="button_submit">LOGIN</button>
             </form>

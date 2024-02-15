@@ -23,6 +23,8 @@ export const LoginUser = createAsyncThunk(
         { expires: 2 }
       );
       toast.success("User logged in successfully");
+      // console.log(response)
+      // return response.data
     } catch (error) {
       if (error.response) {
         toast.error("Give valid Credentials");

@@ -32,8 +32,6 @@ const userSlice = createSlice({
         state.loading = false;
         state.registered = false;
         state.error = action.payload;
-        console.log(action.payload, "dfdf ");
-        console.log(state.error, "this one");
       });
   },
 });

@@ -30,3 +30,24 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+
+
+export const createImage=createAsyncThunk(
+  'image/',
+  async(data,{rejectWithValue})=>{
+    try{
+      const response=await axios.post(`${base_url}api/users/generate_image/`,data,{
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+
+      return response.data
+
+    }catch(error){
+      return rejectWithValue(error.response.data);
+    }
+  }
+)

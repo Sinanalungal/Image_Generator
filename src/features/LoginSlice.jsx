@@ -44,6 +44,5 @@ const userLoginSlice = createSlice({
   },
 });
 
-export const { resetLoginError, userLogined, userLogout } =
-  userLoginSlice.actions;
+export const { resetLoginError, userLogined, userLogout } = userLoginSlice.actions;
 export default userLoginSlice.reducer;

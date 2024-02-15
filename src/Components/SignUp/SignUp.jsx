@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../Login/Login.css";
 import { GrDocumentImage } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../features/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { resetError } from "../../features/user";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [Username, setUsername] = useState("");
@@ -12,99 +13,100 @@ function SignUp() {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [UsernameError, setUsernameError] = useState(null);
-  const [EmailError, setEmailError] = useState(null);
-  const [PasswordError, setPasswordError] = useState(null);
-  const [ConfirmPasswordError, setConfirmPasswordError] = useState(null);
-  const [phoneNumberError, setPhoneNumberError] = useState(null);
+  const [UsernameError, setUsernameError] = useState("");
+  const [EmailError, setEmailError] = useState("");
+  const [PasswordError, setPasswordError] = useState("");
+  const [ConfirmPasswordError, setConfirmPasswordError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const valid_error = useSelector((state) => state.user.error);
   const navigator = useNavigate();
   const dispatch = useDispatch();
-  const {is_Authenticated} = useSelector((state)=>state.login)
+  const { is_Authenticated } = useSelector((state) => state.login);
+
   useEffect(() => {
     if (is_Authenticated) {
-      navigator('/userdashboard');
+      navigator("/userdashboard");
     }
   }, [is_Authenticated]);
-
-
 
   useEffect(() => {
     dispatch(resetError());
   }, [Username, Email, Password, phoneNumber, ConfirmPassword]);
 
+  const validateUsername = useCallback(
+    (value) => {
+      const regex = /^[a-zA-Z0-9_]{3,20}$/;
+      setUsernameError(regex.test(value) ? "" : "Invalid username");
+    },
+    [Username]
+  );
   const handleUsername = (e) => {
-    setUsername(e.target.value);
-
-    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-    if (!usernameRegex.test(Username)) {
-      setUsernameError("Username must contain 3-20 characters and no numerics");
-    } else {
-      setUsernameError(null);
-    }
+    const value = e.target.value;
+    setUsername(value);
+    validateUsername(value);
   };
 
+  const validateEmail = (value) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailError(regex.test(value) ? "" : "Invalid email");
+  };
   const handleEmail = (e) => {
-    setEmail(e.target.value);
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(Email)) {
-      setEmailError("Give a valid email address");
-      return;
-    } else {
-      setEmailError(null);
-    }
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
   };
 
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordRegex.test(Password)) {
-      setPasswordError(
-        "Minimum 8 characters, at least one letter and one number"
-      );
-      return;
-    } else {
-      setPasswordError(null);
-    }
-  };
-
-  const validatecfm = (value) => {
-    setConfirmPasswordError(
-      value === Password ? null : "Passwords do not match"
+  const validatePassword = useCallback((value) => {
+    const regex = /^.{8,}$/;
+    setPasswordError(
+      regex.test(value) ? "" : "Password must be at least 8 characters"
     );
+  });
+  const handlePassword = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    validatePassword(value);
   };
 
+  const validateConfirmPassword = (value) => {
+    setConfirmPasswordError(value === Password ? "" : "Passwords do not match");
+  };
   const handleConfirmPassword = (e) => {
     const value = e.target.value;
     setConfirmPassword(value);
-    validatecfm(value);
+    validateConfirmPassword(value);
   };
 
+  const validatePhoneNumber = (value) => {
+    const regex = /^\d{10}$/;
+    setPhoneNumberError(regex.test(value) ? "" : "Enter a valid phone number");
+  };
   const handlePhoneNumber = (e) => {
-    e.preventDefault();
-    setPhoneNumber(e.target.value);
-
-    const phoneNumberRegex = /^\d{9}$/;
-    if (!phoneNumberRegex.test(phoneNumber)) {
-      setPhoneNumberError("Phone number must be 10 numbers");
-      return;
-    } else {
-      setPhoneNumberError(null);
-    }
+    const value = e.target.value;
+    setPhoneNumber(value);
+    validatePhoneNumber(value);
   };
+
   const handleRegistration = (e) => {
     e.preventDefault();
-    const respo = dispatch(
-      registerUser({
-        username: Username,
-        email: Email,
-        password: Password,
-        phone_number: phoneNumber,
-      })
-    );
-
+    if (
+      !EmailError &&
+      !UsernameError &&
+      !PasswordError &&
+      !phoneNumberError &&
+      !ConfirmPasswordError
+    ) {
+      const respo = dispatch(
+        registerUser({
+          username: Username,
+          email: Email,
+          password: Password,
+          phone_number: phoneNumber,
+        })
+      );
+    } else {
+      toast.error("Give Proper Credentials");
+    }
   };
 
   return (
@@ -142,7 +144,7 @@ function SignUp() {
             >
               <input
                 className={
-                  UsernameError != null || valid_error.username
+                  UsernameError || valid_error.username
                     ? "input-changed"
                     : "input1"
                 }
@@ -157,7 +159,7 @@ function SignUp() {
               </div>
               <input
                 className={
-                  phoneNumberError != null || valid_error.phone_number
+                  phoneNumberError || valid_error.phone_number
                     ? "input-changed"
                     : "input1"
                 }
@@ -168,7 +170,7 @@ function SignUp() {
                 value={phoneNumber}
                 onChange={(e) => handlePhoneNumber(e)}
               />
-             
+
               <div className="error h-[10px]  text-red-600">
                 {valid_error.phone_number
                   ? valid_error.phone_number
@@ -176,9 +178,7 @@ function SignUp() {
               </div>
               <input
                 className={
-                  EmailError != null || valid_error.email
-                    ? "input-changed"
-                    : "input1"
+                  EmailError || valid_error.email ? "input-changed" : "input1"
                 }
                 name="email"
                 required=""
@@ -187,13 +187,13 @@ function SignUp() {
                 value={Email}
                 onChange={(e) => handleEmail(e)}
               />
-             
+
               <div className="error h-[10px] text-red-600">
                 {valid_error.email ? valid_error.email : EmailError}
               </div>
               <input
                 className={
-                  PasswordError != null || valid_error.password
+                  PasswordError || valid_error.password
                     ? "input-changed"
                     : "input1"
                 }
@@ -204,7 +204,7 @@ function SignUp() {
                 value={Password}
                 onChange={(e) => handlePassword(e)}
               />
-             
+
               <div className="error h-[10px] text-red-600">
                 {valid_error.password ? valid_error.password : PasswordError}
               </div>

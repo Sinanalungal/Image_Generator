@@ -2,15 +2,28 @@ import React, { useCallback, useEffect, useState } from "react";
 import { GrDocumentImage } from "react-icons/gr";
 import "./UserDashboard.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../features/LoginSlice";
+import { createImage } from "../../features/actions";
 
 function UserDashboard() {
   const [dropdown, setDropdown] = useState(false);
+  const [content, setContent] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     return setDropdown(false);
   }, []);
+  const { ImageUrl, loader } = useSelector((store) => store.image);
+  // console.log(loader);
+  // console.log(ImageUrl, "result");
+
+  function submitCaller(e) {
+    e.preventDefault();
+    const data = {
+      prompt: content,
+    };
+    dispatch(createImage(data));
+  }
 
   return (
     <>
@@ -122,11 +135,36 @@ function UserDashboard() {
           </div>
         </nav>
 
-        <div className="h-[500px] w-full flex  items-center ">
-          <div className="w-[60%] h-[70%] max-md:w-[99%] mx-auto bg-black"></div>
+        <div className="h-[500px] w-full flex justify-center items-center text-center">
+          {loader ? (
+            <div class="loading-wave">
+              <div class="loading-bar"></div>
+              <div class="loading-bar"></div>
+              <div class="loading-bar"></div>
+              <div class="loading-bar"></div>
+            </div>
+          ) : ImageUrl ? (
+            <img className="mt-10 rounded-md" src={ImageUrl} alt="" />
+          ) : (
+            <div className="w-[90%] text-sm text-gray-400 font-bold">
+              <p style={{ lineHeight: "1.5" }}>
+                Transforming words into visual masterpieces
+              </p>
+              <p style={{ lineHeight: "1.5" }}>
+                Where creativity meets technology.
+              </p>
+              <p style={{ lineHeight: "1.5" }}>
+                Unleash the power of your imagination with our text-to-image
+                generator and bring your ideas to life effortlessly.
+              </p>
+            </div>
+          )}
         </div>
 
-        <form className="lg:w-[80%] w-[99%] mx-auto py-[38px]">
+        <form
+          className="lg:w-[80%] w-[99%] mx-auto py-[38px] mt-2"
+          onSubmit={(e) => submitCaller(e)}
+        >
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -137,6 +175,8 @@ function UserDashboard() {
             <input
               type="search"
               id="default-search"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               className="form-input block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-slate-50"
               placeholder="Enter details...."
             />{" "}
