@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./UserProfile.css";
 import Modal from "react-modal";
 import EditModal from "../EditModal/Modal";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../features/LoginSlice";
 
 Modal.setAppElement("#root");
 
 function UserProfile() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
@@ -37,7 +40,7 @@ function UserProfile() {
             <div className="text z-0">edit</div>
           </button>
           <button className="Btn2 ml-2 mt-3 text-white text-xs mr-2 bg-red-600">
-            <div className="sign ">
+            <div className="sign " onClick={() => dispatch(userLogout())}>
               <svg viewBox="0 0 512 512">
                 <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
               </svg>
@@ -48,25 +51,25 @@ function UserProfile() {
           <div className="w-[200px] h-[250px] bg-black absolute lg:ml-[18%] max-sm:hidden mt-[9%]"></div>
         </div>
       </div>
-      <Modal className=' mx-auto max-md:w-full mt-[60px] w-[30rem]' 
+      <Modal
+        className=" mx-auto max-md:w-full mt-[60px] w-[30rem]"
         isOpen={modalIsOpen}
         style={{
           content: {
             background: "white",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center",
-            justifyContent:"center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
             border: "none",
             borderRadius: "10px",
             boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
             padding: "20px",
             outline: "none",
           },
-          overlay: {
-            // backgroundColor: "rgba(0, 0, 0, 0.6)",
-          },
-        }}>
+          overlay: {},
+        }}
+      >
         <button
           onClick={setModalIsOpenToFalse}
           style={{
@@ -83,7 +86,7 @@ function UserProfile() {
         >
           x
         </button>
-        <EditModal action='Edit Details'/>
+        <EditModal action="Edit Details" />
       </Modal>
     </>
   );

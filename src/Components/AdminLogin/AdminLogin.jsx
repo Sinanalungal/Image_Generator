@@ -2,15 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
-  const navigator=useNavigate()
+  const navigator = useNavigate();
   return (
     <>
       <section className="bg-gray-100 min-h-svh  ">
         <div className="flex flex-col align-middle items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          {/* <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
-          Flowbite
-        </a> */}
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-200">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-dark">
@@ -52,7 +48,8 @@ function AdminLogin() {
                 <button
                   type="button"
                   className=" border border-gray-300 font-bold sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  style={{ backgroundColor: "black" }} onClick={()=>navigator('/adminpage')}
+                  style={{ backgroundColor: "black" }}
+                  onClick={() => navigator("/adminpage")}
                   required
                 >
                   Login
@@ -62,7 +59,6 @@ function AdminLogin() {
           </div>
         </div>
       </section>
-
     </>
   );
 }

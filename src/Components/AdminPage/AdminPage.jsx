@@ -7,7 +7,6 @@ import EditModal from "../EditModal/Modal";
 function AdminPage() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
   };
@@ -84,11 +83,6 @@ function AdminPage() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  {/* <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              /> */}
                   <span>
                     <GrDocumentImage className="h-8 w-auto text-green-800" />
                   </span>
@@ -99,9 +93,6 @@ function AdminPage() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="relative ml-3  flex">
-                  {/* <div className="bg-green-800 rounded-xl text-white font-bold p-3 py-2 max-sm:hidden">
-                    Admin
-                  </div> */}
                   <button className="Btn1 ml-2">
                     <div className="sign1">
                       <svg viewBox="0 0 512 512">
@@ -123,47 +114,14 @@ function AdminPage() {
               {/* Dropdown Button */}
               <div className="flex mr-5 mb-4">
                 <h1 className="font-black text-2xl">User Management</h1>
-
-                {/* <button
-            id="dropdownActionButton"
-            data-dropdown-toggle="dropdownAction"
-            className="inline-flex items-center text-black bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-slate-100 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            type="button"
-          >
-            <span className="sr-only">Action button</span>
-            Action
-            <svg
-              className="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-            </svg>
-          </button> */}
-                {/* Dropdown menu */}
-                {/* <div id="dropdownAction" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-white dark:divide-gray-600">
-            <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
-              <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
-              </li>
-              <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
-              </li>
-              <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a>
-              </li>
-            </ul>
-            <div className="py-1">
-              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>
-            </div>
-          </div> */}
               </div>
 
               {/* Search Input */}
               <div className="flex  ">
-                <button className="CartBtn bg-black " onClick={setModalIsOpenToTrue}>
+                <button
+                  className="CartBtn bg-black "
+                  onClick={setModalIsOpenToTrue}
+                >
                   <span className="IconContainer">
                     <svg
                       className="svg text-white"
@@ -219,18 +177,6 @@ function AdminPage() {
             <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-slate-500 dark:text-gray-200">
                 <tr>
-                  {/* <th scope="col" className="p-4">
-              <div className="flex items-center">
-                <input
-                  id="checkbox-all-search"
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label htmlFor="checkbox-all-search" className="sr-only">
-                  checkbox
-                </label>
-              </div>
-            </th> */}
                   <th scope="col" className="px-6 py-3">
                     Image
                   </th>
@@ -257,20 +203,7 @@ function AdminPage() {
                     key={user.id}
                     className="bg-white  dark:bg-slate-100 dark:border-gray-700  hover:bg-gray-50 dark:hover:bg-slate-300"
                   >
-                    {/* <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id={`checkbox-table-search-${user.id}`}
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor={`checkbox-table-search-${user.id}`} className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td> */}
                     <td className=" items-center">
-                      {/* <img className="w-10 h-10 rounded-full" src={`/docs/images/people/profile-picture-${user.id}.jpg`} alt={`${user.name} image`} /> */}
                       <div className="ml-6 w-[50px] h-[50px] bg-black"></div>
                     </td>
                     <th
@@ -288,21 +221,14 @@ function AdminPage() {
                     </th>
                     <td className="px-6 py-4">email@gmail.com</td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        09876654332
-                        {/* <div className={`h-2.5 w-2.5 rounded-full ${user.status === 'Online' ? 'bg-green-500' : 'bg-red-500'} me-2`}></div> */}
-                        {/* {user.status} */}
-                      </div>
+                      <div className="flex items-center">09876654332</div>
                     </td>
                     <td className="px-6 py-4">active</td>
                     <td className="px-6 py-4">
-                      {/* <a
-                        href="#"
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      <button
+                        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                        onClick={setModalIsOpenToTrue}
                       >
-                        Edit user
-                      </a> */}
-                      <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={setModalIsOpenToTrue}>
                         Edit
                       </button>
                       <button className="bg-red-700 mt-1 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-1">
@@ -316,11 +242,11 @@ function AdminPage() {
           </div>
         </div>
       </div>
-      <Modal className=' mx-auto max-md:w-full mt-[60px] w-[30rem]'
+      <Modal
+        className=" mx-auto max-md:w-full mt-[60px] w-[30rem]"
         isOpen={modalIsOpen}
         style={{
           content: {
-
             background: "white",
             display: "flex",
             flexDirection: "column",
@@ -353,7 +279,7 @@ function AdminPage() {
         >
           x
         </button>
-        <EditModal action='Add/Edit User Details'  />
+        <EditModal action="Add/Edit User Details" />
       </Modal>
     </>
   );
