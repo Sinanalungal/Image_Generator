@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { base_url } from "./base_url";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export const registerUser = createAsyncThunk(
   "user/register",
@@ -50,4 +51,21 @@ export const createImage=createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
+)
+
+export const profileUpdate=createAsyncThunk(
+  'profile/', async(data,{rejectWithValue})=>{
+    try{
+      const cookieValue = Cookies.get("detail");
+      const token=cookieValue.access
+      const decodedValue = decodeURIComponent(cookieValue);
+      console.log(decodedValue)
+      const response=await axios.patch(`${base_url}api/users/update_profile/`,data);
+      return response.data
+    }catch(error){
+      return rejectWithValue(error.response.data)
+    }
+    
+  }
+
 )

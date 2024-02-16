@@ -140,7 +140,9 @@
     transition-duration: .3s;
     padding-left: 20px;
   }
-  
+  .forred{
+    background-color: red !important;
+  }
   /* hover effect button's text */
   .Btn2:hover .text2 {
     color: white;
@@ -155,3 +157,4 @@
     transform: translate(2px, 2px);
   }
   
+
