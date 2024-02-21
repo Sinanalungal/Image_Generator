@@ -5,13 +5,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../features/LoginSlice";
 import { createImage } from "../../features/actions";
+import { base_url } from "../../features/base_url";
+// import { userDataset } from "../../features/LoginAction";
+import Cookies from "js-cookie";
 
 function UserDashboard() {
   const [dropdown, setDropdown] = useState(false);
   const [content, setContent] = useState("");
+  const [profile,setProfile]=useState('./avatar.jpg');
   const dispatch = useDispatch();
   useEffect(() => {
-    return setDropdown(false);
+    // dispatch(userDataset());
+    try{
+      const cookie=JSON.parse(Cookies.get("user")).profile
+      const url=`${base_url}${cookie}`
+      setProfile(url)
+    }catch(err){
+      setProfile('./avatar.jpg')
+    }
+    return () => {
+      setDropdown(false);
+      // Cookies.remove("detail");
+    };
   }, []);
   const { ImageUrl, loader } = useSelector((store) => store.image);
   // console.log(loader);
@@ -95,7 +110,7 @@ function UserDashboard() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={profile}
                         alt=""
                       />
                     </button>
@@ -137,11 +152,11 @@ function UserDashboard() {
 
         <div className="h-[500px] w-full flex justify-center items-center text-center">
           {loader ? (
-            <div class="loading-wave">
-              <div class="loading-bar"></div>
-              <div class="loading-bar"></div>
-              <div class="loading-bar"></div>
-              <div class="loading-bar"></div>
+            <div className="loading-wave">
+              <div className="loading-bar"></div>
+              <div className="loading-bar"></div>
+              <div className="loading-bar"></div>
+              <div className="loading-bar"></div>
             </div>
           ) : ImageUrl ? (
             <img className="mt-10 rounded-md" src={ImageUrl} alt="" />

@@ -1,33 +1,66 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import './ProfileUpdateModal.css'
 import { BiSolidImageAdd } from "react-icons/bi";
 import { useDispatch } from 'react-redux';
-import { profileUpdate } from '../../features/actions';
+// import { profileUpdate } from '../../features/actions';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { base_url } from '../../features/base_url';
+import { toast } from 'react-toastify';
 
-const MyModalComponent = ({ isOpen, onClose }) => {
+const MyModalComponent = ({ isOpen, onClose ,user}) => {
+  const [authToken , setAuthToken] = useState(JSON.parse(Cookies.get('accessToken')))
   const dispatch=useDispatch()
-  const [selectedImage, setSelectedImage] = useState('./avatar.jpg');
+  const [selectedImage, setSelectedImage] = useState(user.profile?`${base_url}${user.profile}`:'./avatar.jpg');
+  const [updateImg,setUpdateImg] = useState('');
 
+  useEffect(()=>setSelectedImage(user.profile?`${base_url}${user.profile}`:'./avatar.jpg'),[user])
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setUpdateImg(file)
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setSelectedImage(e.target.result);
       };
       const imageurl=reader.readAsDataURL(file);
-      // console.log(imageurl);
+      console.log(imageurl);
     }
   };
+  console.log(user)
 
-  const callProfileUpdation=()=>{
-    const data={
-      profile:selectedImage
+  const callProfileUpdation = async() => {
+    const formData=new FormData
+    formData.append('profile',updateImg)
+    formData.append('email',user.email)
+
+    // const id=JSON.parse(Cookies.get('accessToken'))
+    console.log(formData)
+    try{
+      await axios.patch(`${base_url}api/users/update_profile/`,formData).then((response)=>{
+        const userdataCookie = Cookies.get('user');
+        const userData = userdataCookie ? JSON.parse(userdataCookie) : {};
+        userData.profile=response.data.updated_image
+        const updatedUserdata = JSON.stringify(userData);
+        Cookies.set('user', updatedUserdata);
+        toast.success('profile updated successfully')
+        onClose()
+      })
+    }catch(e){
+      toast.error('There is some issue')
     }
-    dispatch(profileUpdate(data))
-  }
-
+    
+    
+    // const data = {
+    //   profile: formData,
+    //   email: user.email,
+    // };
+    // dispatch(profileUpdate(formData)).then(response => {
+    //   console.log(response); // Log the response from the backend
+    // });
+  };
+console.log(selectedImage)
   return (
     <Modal className='px-5 max:w-[95%] w-[400px] border rounded-md shadow-lg'
       isOpen={isOpen}

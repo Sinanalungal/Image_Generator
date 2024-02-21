@@ -2,7 +2,6 @@
     margin-top: 36px;
     display: flex;
     flex-direction: column;
-    width: 300px;
   }
   
   .feed-form input {
@@ -22,7 +21,18 @@
     transform: scale(1.009);
     box-shadow: 0px 0px 3px 0px #212529;
   }
-  
+  @media(max-width:320px){
+    .button_submit{
+      width: 99%!important;
+
+    }
+  }
+  @media(min-width:321px){
+    .feed-form{
+      width: 300px!important;
+
+    }
+  }
   .button_submit {
     margin-top: 8px;
     width: 100%;

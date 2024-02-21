@@ -111,7 +111,7 @@ function SignUp() {
 
   return (
     <>
-      <div className="w-full h-screen flex">
+      <div className="w-full h-[700px] flex">
         <div className="w-[60%] max-lg:hidden h-full rounded-r-xl grid items-center justify-center">
           <div className="flex flex-shrink-0 flex-col items-center ">
             <div className="flex items-center">
@@ -123,7 +123,7 @@ function SignUp() {
           </div>
         </div>
         <div className="lg:w-[40%] w-full  h-full bg-slate-200 rounded-l-lg flex flex-col justify-center items-center">
-          <section className="section_form max-sm:w-full">
+          <section className="section_form max-sm:w-full max-sm:items-center max-sm:flex max-sm:flex-col">
             <div className="flex flex-shrink-0 max-sm:mx-auto flex-col items-center lg:hidden">
               <div className="flex">
                 <span>
@@ -134,7 +134,7 @@ function SignUp() {
                 </span>
               </div>
             </div>
-            <h1 className="text-3xl max-sm:text-sm max-sm:px-9 font-bold max-sm:mx-auto">
+            <h1 className="text-3xl max-sm:text-xl max-sm:px-9 font-bold max-sm:mx-auto">
               SIGN UP
             </h1>
             <form

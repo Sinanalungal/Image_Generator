@@ -24,7 +24,6 @@ export const registerUser = createAsyncThunk(
         toast.error("Give proper credentials");
         return rejectWithValue(error.response.data);
       } else {
-        // console.log(error)
         toast.error("Give proper credentials");
         return rejectWithValue(error.response.data);
       }
@@ -53,19 +52,21 @@ export const createImage=createAsyncThunk(
   }
 )
 
-export const profileUpdate=createAsyncThunk(
-  'profile/', async(data,{rejectWithValue})=>{
-    try{
-      const cookieValue = Cookies.get("detail");
-      const token=cookieValue.access
-      const decodedValue = decodeURIComponent(cookieValue);
-      console.log(decodedValue)
-      const response=await axios.patch(`${base_url}api/users/update_profile/`,data);
-      return response.data
-    }catch(error){
-      return rejectWithValue(error.response.data)
-    }
+// export const profileUpdate=createAsyncThunk(
+//   'profile/', async(data,{rejectWithValue})=>{
+//     const id=JSON.parse(Cookies.get(accessToken).user_id)
+//     console.log(id)
+//     try{
+//       const access=JSON.parse(Cookies.get('accessToken'))
+//       const response=await axios.put(`${base_url}api/users/update_profile/${id}/`,data);
+//       console.log(response)
+//       return response.data
+//     }catch(error){
+//       return rejectWithValue(error.response.data)
+//     }
     
-  }
+//   }
 
-)
+// )
+
+// // export const 

@@ -17,10 +17,12 @@ function Login() {
   const [PasswordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const { error } = useSelector((state) => state.login);
+  const { error } = useSelector((state) => state.login || {});
   const { is_Authenticated } = useSelector((state) => state.login);
 
-  const userInfoCookie = !!Cookies.get("accessToken");
+  // console.log(error)
+
+  const userInfoCookie = !!Cookies.get("accessToken")&&!!Cookies.get("detail")&&!!Cookies.get("user");
   useEffect(() => {
     userInfoCookie ? dispatch(userLogined()) : dispatch(userLogout());
   }, [userInfoCookie]);
@@ -73,7 +75,7 @@ function Login() {
 
   return (
     <>
-      <div className="w-full h-svh flex ">
+      <div className="w-full h-[700px] flex ">
         <div className="w-[60%] max-lg:hidden h-full rounded-r-xl grid items-center justify-center">
           <div className="flex flex-shrink-0 flex-col items-center ">
             <div className="flex">
@@ -85,7 +87,7 @@ function Login() {
           </div>
         </div>
         <div className="lg:w-[40%] w-full  h-full bg-slate-200 rounded-l-lg flex flex-col justify-center items-center">
-          <section className="section_form max-sm:w-full">
+          <section className="section_form max-sm:w-full max-sm:items-center max-sm:flex max-sm:flex-col">
             <div className="flex flex-shrink-0 max-sm:mx-auto flex-col items-center lg:hidden">
               <div className="flex">
                 <span>
@@ -96,18 +98,18 @@ function Login() {
                 </span>
               </div>
             </div>
-            <h1 className="text-3xl max-sm:text-sm max-sm:px-9 font-bold max-sm:mx-auto">
+            <div className="text-3xl max-sm:text-xl max-sm:px-9 font-bold ">
               LOGIN
-            </h1>
+            </div>
             <form
               id="consultation-form max-sm:text-xs login"
-              className="feed-form max-sm:w-[85%] max-sm:mx-auto"
+              className="feed-form  max-[320px]:w-[98%]"
               onSubmit={(e) => submitForm(e)}
             >
               <input
                 name="email"
                 className={
-                  EmailError || error.email ? "input-changed" : "input1"
+                  EmailError ||(error && error.email) ? "input-changed max-[320px]:w-[98%]" : "input1 max-[320px]:w-[98%]"
                 }
                 required=""
                 placeholder="email"
@@ -116,12 +118,12 @@ function Login() {
                 onChange={(e) => handleEmailChange(e)}
               />
               <div className="error h-[10px] text-red-600">
-                {error.email ? error.email : EmailError}
+                {(error && error.email) ? error.email : EmailError}
               </div>
               <input
                 name="password"
                 className={
-                  PasswordError || error.password ? "input-changed" : "input1"
+                  PasswordError || (error && error.password) ? "input-changed max-[320px]:w-[98%]" : "input1 max-[320px]:w-[98%]"
                 }
                 required=""
                 placeholder="password"
@@ -130,9 +132,9 @@ function Login() {
                 onChange={(e) => handlePasswordChange(e)}
               />
               <div className="error h-[10px] text-red-600">
-                {error.password ? error.password : PasswordError}
+                {(error && error.password) ? error.password : PasswordError}
               </div>
-              <button className="button_submit">LOGIN</button>
+              <button className="button_submit max-[320px]:w-[98%]">LOGIN</button>
             </form>
           </section>
           <span className="text-xs mt-4 text-gray-800">

@@ -40,11 +40,12 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/adminlogin" element={<AdminLogin />} />
+
             {is_Authenticated && (
               <>
                 <Route path="/userdashboard" element={<UserDashboard />} />
                 <Route path="/userprofile" element={<UserProfile />} />
-                <Route path="/adminlogin" element={<AdminLogin />} />
                 <Route path="/adminpage" element={<AdminPage />} />
               </>
             )}
