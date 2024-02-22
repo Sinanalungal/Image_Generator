@@ -3,7 +3,7 @@ import "./UserProfile.css";
 import Modal from "react-modal";
 import EditModal from "../EditModal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../features/LoginSlice";
+import { dataFetch, userLogout } from "../../features/LoginSlice";
 import MyModalComponent from "./ProfileUpdateModal";
 import Cookies from "js-cookie";
 import { base_url } from "../../features/base_url";
@@ -11,17 +11,17 @@ import { base_url } from "../../features/base_url";
 Modal.setAppElement("#root");
 
 function UserProfile() {
+  const {user}=useSelector((store)=>store.login)
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [imageUpdateModal,setImageUpdateModal] = useState(false)
-  const [user,setUser]=useState({})
+  // const [user,setUser]=useState({})
 
   const dispatch = useDispatch();
   // const {user}=useSelector((store) => store.login)
   // console.log(user)
   useEffect(()=>{
-    const initialUserData = Cookies.get("user");
-    setUser(initialUserData ? JSON.parse(initialUserData) : {})
-  },[imageUpdateModal,modalIsOpen])
+    dispatch(dataFetch())
+  },[modalIsOpen])
   console.log(user)
   const setModalIsOpenToTrue = () => {
     setModalIsOpen(true);
@@ -45,9 +45,9 @@ function UserProfile() {
       <div className="h-[700px] w-full flex justify-center  items-center ">
         
          <div className="border-2  shadow-2xl border-gray-300 rounded-lg lg:w-[80%] h-[85%] max-md:grid  w-full  bg-gray-400 flex  relative min-[385px]:items-center">
-         <div onClick={openModal} className=" max-[385px]:mt-[77px] bg-cover bg-center bg-no-repeat rounded-md absolute w-[180px] ml-[20%]  max-sm:h-[43%]  max-sm:w-[150px] max-md:ml-4 h-[50%] flex " style={{
-    backgroundImage: `url(${base_url}${user.profile !== null ? user.profile : './avatar.jpg'})`,
-  }}><span className="bg-gray-100 opacity-0 hover:opacity-60 cursor-pointer p-1 rounded-sm w-full flex items-center justify-center font-black">Edit</span></div>
+         <div onClick={openModal} className=" max-[385px]:mt-[77px] bg-cover bg-center bg-no-repeat rounded-md absolute w-[180px] ml-[20%]  max-sm:h-[43%]  max-sm:w-[150px] max-md:ml-4 h-[50%] flex " style={
+           (user.profile) ? {backgroundImage: `url(${base_url}${user.profile})`}:{backgroundImage: `url(./avatar.jpg)`}
+  }><span className="bg-gray-100 opacity-0 hover:opacity-60 cursor-pointer p-1 rounded-sm w-full flex items-center justify-center font-black">Edit</span></div>
 
           <div className="bg-black w-[26%] max-md:w-full max-md:flex max-md:justify-between  h-full">
             <div className="text-white font-serif mt-3 ml-4 text-xl font-black">PROFILE</div>
@@ -128,9 +128,9 @@ function UserProfile() {
         >
           x
         </button>
-        <EditModal action="Edit Details" setModalIsOpen={setModalIsOpen} setUser={setUser}  user={user}/>
+        <EditModal action="Edit Details" userdata={false} setModalIsOpen={setModalIsOpen}  showemail={false}  />
       </Modal>
-      <MyModalComponent  isOpen={imageUpdateModal} onClose={closeModal} user={user}/>
+      <MyModalComponent  isOpen={imageUpdateModal}  onClose={closeModal} />
     </>
   );
 }

@@ -13,21 +13,26 @@ function AdminLogin() {
   const [PasswordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const { error } = useSelector((state) => state.login || {});
+  const { error , user } = useSelector((state) => state.login );
   const { is_Authenticated } = useSelector((state) => state.login);
 
   // console.log(error)
 
-  const userInfoCookie = !!Cookies.get("accessToken")&&!!Cookies.get("detail")&&!!Cookies.get("user");
-  // useEffect(() => {
-  //   userInfoCookie ? dispatch(userLogined()) : dispatch(userLogout());
-  // }, [userInfoCookie]);
+  const userInfoCookie = !!Cookies.get("accessToken")&&!!Cookies.get("detail");
+  useEffect(() => {
+    userInfoCookie ? dispatch(userLogined()) : dispatch(userLogout());
+  }, [userInfoCookie]);
 
-  // useEffect(() => {
-  //   if (is_Authenticated) {
-  //     navigator("/userdashboard");
-  //   }
-  // }, [is_Authenticated]);
+  useEffect(() => {
+
+
+    if (is_Authenticated && user.isSuperuser) {
+      console.log(is_Authenticated,user.isSuperuser)
+      navigator('/adminpage');
+    }else if (is_Authenticated){
+      navigator('/userdashboard');
+    }
+  }, [is_Authenticated]);
 
   useEffect(() => {
     dispatch(resetLoginError());
@@ -126,7 +131,7 @@ function AdminLogin() {
                   </div>
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   className=" border border-gray-300 font-bold sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   style={{ backgroundColor: "black" }}
                   // onClick={() => navigator("/adminpage")}

@@ -9,7 +9,7 @@ export const LoginUser = createAsyncThunk(
   "login",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}api/token/`, data, {
+      const response = await axios.post(`${base_url}api/token/userdata/`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -27,22 +27,22 @@ export const LoginUser = createAsyncThunk(
       toast.success("User logged in successfully");
       console.log(response.data);
 
-      if (response.status == 200){
-        console.log('working')
-        try{
-          const userdata=await axios.post(`${base_url}api/users/fetchdata/`,data,{
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          });
-          Cookies.set("user", JSON.stringify(userdata.data));
+      // if (response.status == 200){
+      //   console.log('working')
+      //   try{
+      //     const userdata=await axios.post(`${base_url}api/users/fetchdata/`,data,{
+      //       headers: {
+      //         Accept: "application/json",
+      //         "Content-Type": "application/json",
+      //       },
+      //     });
+      //     Cookies.set("user", JSON.stringify(userdata.data));
   
-        }catch(error){
-          console.log('userdata unavailable')
-        }
+      //   }catch(error){
+      //     console.log('userdata unavailable')
+      //   }
         
-      }
+      // }
       // console.log(response)
       return response.data
     } catch (error) {
@@ -107,8 +107,8 @@ const refreshAccessToken = async () => {
 };
 
 axios.interceptors.request.use(async (config) => {
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   try{
-    console.log('--------------------------')
     const accessToken = JSON.parse(Cookies.get('accessToken'));
   // Decode the access token to get expiry time
     const { exp } = jwtDecode(accessToken);
@@ -122,6 +122,7 @@ axios.interceptors.request.use(async (config) => {
     }
     return config;
   }catch{
+    console.log('working....')
     return config;
   }
   

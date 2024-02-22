@@ -18,18 +18,20 @@ function Login() {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const { error } = useSelector((state) => state.login || {});
-  const { is_Authenticated } = useSelector((state) => state.login);
+  const { is_Authenticated,user } = useSelector((state) => state.login);
 
   // console.log(error)
 
-  const userInfoCookie = !!Cookies.get("accessToken")&&!!Cookies.get("detail")&&!!Cookies.get("user");
+  const userInfoCookie = !!Cookies.get("accessToken") && !!Cookies.get("detail");
   useEffect(() => {
     userInfoCookie ? dispatch(userLogined()) : dispatch(userLogout());
   }, [userInfoCookie]);
 
   useEffect(() => {
-    if (is_Authenticated) {
-      navigator("/userdashboard");
+    if (is_Authenticated&&user.isSuperuser) {
+      navigator('/adminpage');
+    }else if (is_Authenticated && !(user.isSuperuser)){
+      navigator('/userdashboard');
     }
   }, [is_Authenticated]);
 
