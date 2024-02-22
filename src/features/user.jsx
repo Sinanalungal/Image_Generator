@@ -1,14 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { registerUser } from "./actions";
 
 const initialState = {
-  // isAuthenticated: false,
-  // user:null,
   loading: false,
   registered: false,
   error: {},
   success: false,
-  // is_superuser:false,
 };
 
 const userSlice = createSlice({

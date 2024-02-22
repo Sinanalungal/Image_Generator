@@ -18,20 +18,19 @@ function Login() {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const { error } = useSelector((state) => state.login || {});
-  const { is_Authenticated,user } = useSelector((state) => state.login);
+  const { is_Authenticated, user } = useSelector((state) => state.login);
 
-  // console.log(error)
-
-  const userInfoCookie = !!Cookies.get("accessToken") && !!Cookies.get("detail");
+  const userInfoCookie =
+    !!Cookies.get("accessToken") && !!Cookies.get("detail");
   useEffect(() => {
     userInfoCookie ? dispatch(userLogined()) : dispatch(userLogout());
   }, [userInfoCookie]);
 
   useEffect(() => {
-    if (is_Authenticated&&user.isSuperuser) {
-      navigator('/adminpage');
-    }else if (is_Authenticated && !(user.isSuperuser)){
-      navigator('/userdashboard');
+    if (is_Authenticated && user.isSuperuser) {
+      navigator("/adminpage");
+    } else if (is_Authenticated && !user.isSuperuser) {
+      navigator("/userdashboard");
     }
   }, [is_Authenticated]);
 
@@ -111,7 +110,9 @@ function Login() {
               <input
                 name="email"
                 className={
-                  EmailError ||(error && error.email) ? "input-changed max-[320px]:w-[98%]" : "input1 max-[320px]:w-[98%]"
+                  EmailError || (error && error.email)
+                    ? "input-changed max-[320px]:w-[98%]"
+                    : "input1 max-[320px]:w-[98%]"
                 }
                 required=""
                 placeholder="email"
@@ -120,12 +121,14 @@ function Login() {
                 onChange={(e) => handleEmailChange(e)}
               />
               <div className="error h-[10px] text-red-600">
-                {(error && error.email) ? error.email : EmailError}
+                {error && error.email ? error.email : EmailError}
               </div>
               <input
                 name="password"
                 className={
-                  PasswordError || (error && error.password) ? "input-changed max-[320px]:w-[98%]" : "input1 max-[320px]:w-[98%]"
+                  PasswordError || (error && error.password)
+                    ? "input-changed max-[320px]:w-[98%]"
+                    : "input1 max-[320px]:w-[98%]"
                 }
                 required=""
                 placeholder="password"
@@ -134,9 +137,11 @@ function Login() {
                 onChange={(e) => handlePasswordChange(e)}
               />
               <div className="error h-[10px] text-red-600">
-                {(error && error.password) ? error.password : PasswordError}
+                {error && error.password ? error.password : PasswordError}
               </div>
-              <button className="button_submit max-[320px]:w-[98%]">LOGIN</button>
+              <button className="button_submit max-[320px]:w-[98%]">
+                LOGIN
+              </button>
             </form>
           </section>
           <span className="text-xs mt-4 text-gray-800">

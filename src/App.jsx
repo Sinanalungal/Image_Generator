@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Cookies from "js-cookie";
 import { userLogined, userLogout } from "./features/LoginSlice";
 import "./App.css";
@@ -16,7 +16,7 @@ const AdminPage = lazy(() => import("./Components/AdminPage/AdminPage"));
 const NotFoundPage = lazy(() => import("./404"));
 
 function App() {
-  const { is_Authenticated,user } = useSelector((state) => state.login);
+  const { is_Authenticated, user } = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const userInfoCookie = useMemo(() => !!Cookies.get("accessToken"));
   useEffect(() => {
@@ -42,17 +42,17 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/adminlogin" element={<AdminLogin />} />
 
-            {is_Authenticated && !(user.isSuperuser) && (
+            {is_Authenticated && !user.isSuperuser && (
               <>
                 <Route path="/userdashboard" element={<UserDashboard />} />
                 <Route path="/userprofile" element={<UserProfile />} />
-
               </>
             )}
-            {is_Authenticated && user.isSuperuser && (<>
-              <Route path="/adminpage" element={<AdminPage />} />
-
-              </>)}
+            {is_Authenticated && user.isSuperuser && (
+              <>
+                <Route path="/adminpage" element={<AdminPage />} />
+              </>
+            )}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

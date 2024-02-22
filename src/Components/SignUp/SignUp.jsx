@@ -103,9 +103,8 @@ function SignUp() {
           password: Password,
           phone_number: phoneNumber,
         })
-      ); navigator('/'); 
-
-      
+      );
+      navigator("/");
     } else {
       toast.error("Give Proper Credentials");
     }

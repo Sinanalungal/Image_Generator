@@ -1,31 +1,24 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GrDocumentImage } from "react-icons/gr";
 import "./UserDashboard.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { dataFetch, userLogout } from "../../features/LoginSlice";
 import { createImage } from "../../features/actions";
 import { base_url } from "../../features/base_url";
-// import { userDataset } from "../../features/LoginAction";
-import Cookies from "js-cookie";
 
 function UserDashboard() {
   const [dropdown, setDropdown] = useState(false);
   const [content, setContent] = useState("");
-  const { user }=useSelector((store) => store.login)
-  // const [profile,setProfile]=useState('./avatar.jpg');
+  const { user } = useSelector((store) => store.login);
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(userDataset());
-    dispatch(dataFetch())
+    dispatch(dataFetch());
     return () => {
       setDropdown(false);
-      // Cookies.remove("detail");
     };
   }, []);
   const { ImageUrl, loader } = useSelector((store) => store.image);
-  // console.log(loader);
-  // console.log(ImageUrl, "result");
 
   function submitCaller(e) {
     e.preventDefault();
@@ -105,7 +98,11 @@ function UserDashboard() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={(user.profile) ? `${base_url}${user.profile}` : './avatar.jpg'}
+                        src={
+                          user.profile
+                            ? `${base_url}${user.profile}`
+                            : "./avatar.jpg"
+                        }
                         alt=""
                       />
                     </button>
