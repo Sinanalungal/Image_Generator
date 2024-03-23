@@ -1,5 +1,5 @@
-OpenAI DALL·E 2 Powered Image Generation Frontend
-Welcome to the frontend repository for our image generation service powered by OpenAI's DALL·E 2 model. This frontend is built using React.js with Vite for fast development and building.
+##OpenAI DALL·E 2 Powered Image Generation Frontend
+#Welcome to the frontend repository for our image generation service powered by OpenAI's DALL·E 2 model. This frontend is built using React.js with Vite for fast development and building.
 
 Features
 Sleek User Interface: Provides an intuitive and modern user interface for interacting with the image generation service.
